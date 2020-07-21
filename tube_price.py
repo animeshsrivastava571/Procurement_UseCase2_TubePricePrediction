@@ -27,7 +27,7 @@ def predict_price():
     for f in os.listdir("."):
         if f.endswith('.csv'):
             file_csv.append(f)
-    selected_filename = st.selectbox('Load a test file to execute',file_csv,index=3)
+    selected_filename = st.selectbox('Load a test file to execute',file_csv,index=4)
     st.write('You selected `%s`' % selected_filename + '. To perform analysis on this file, continue below')
     df_test = pd.read_csv(selected_filename,nrows=10000)
 
@@ -173,6 +173,8 @@ def predict_price():
                         height=700)
         fig = go.Figure(data=data,layout=layout)
         st.plotly_chart(fig)
+
+
     return 0
 
 # predict_price()
