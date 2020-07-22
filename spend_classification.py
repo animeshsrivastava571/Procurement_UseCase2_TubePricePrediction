@@ -22,7 +22,7 @@ def spend_classify():
     img = Image.open('tb_img3.png')
     st.image(img,width=900)
 
-    st.markdown("## Look at the Sample Data")
+    st.markdown("## Sample Data")
     df1 = pd.read_csv('D:/HCL_office/Use_Case3_SpendClassification/purchase-order-quantity-price-detail-for-commodity-goods-procurements-1.csv',nrows=10)
     st.table(df1)
 
@@ -32,7 +32,7 @@ def spend_classify():
     - Choice of Classes and the level of intricacy that we can achieve
     ''')
     df = pd.read_csv('cleaned_annotation.csv',index_col=0)
-    st.markdown("## Look at the WordCloud of the Text Data")
+    st.markdown("## WordCloud of the Text Data")
     st.text("")
 
     text = ''.join(df.combined_text)
@@ -46,20 +46,20 @@ def spend_classify():
     st.pyplot()
     st.text("")
 
-    st.markdown("## Labelling Strategy 1: K-means Clustering")
+    st.markdown("## Labelling Strategy 1: TF-IDF + K-means Clustering")
     st.text("")
-    img = Image.open('Ani.png')
+    img = Image.open('Cluster1.png')
     st.image(img,width=900)
     st.markdown('''### From the various metrics''')
     st.markdown('''
     - Inter-intra cluster distance ratio
     - Calisnki-Harbasz Index
-    - Slihouette Score
+    - Silhouette Score
         ''')
-    st.markdown('We choose **7** as the number of clusters')
+    st.markdown('We choose **5** as the number of clusters')
 
     st.markdown('''### Let's have a look at the clusters''')
-    img = Image.open('Ani2.png')
+    img = Image.open('Cluster3.png')
     st.image(img,width=900)
     return 0
 # spend_classify()
