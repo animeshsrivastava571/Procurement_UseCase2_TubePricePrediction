@@ -11,34 +11,31 @@ import lime
 import lime.lime_tabular
 import seaborn as sns
 from sklearn.metrics import r2_score
-import os
 from PIL import Image
+from sklearn.tree import export_graphviz
+import os
+os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/release/bin'
+import graphviz
 
 def predict_price():
 
     img = Image.open('tb_img1.png')
     st.image(img,width=900)
-    st.markdown("## Feature Engineering")
+    st.markdown("### Feature Engineering and EDA")
     img = Image.open('tb_img2.png')
     st.image(img,width=900)
-    file_csv=[]
-    for f in os.listdir("."):
-        if f.endswith('.csv'):
-            file_csv.append(f)
-    selected_filename = st.selectbox('Load a test file to execute',file_csv,index=4)
-    st.write('You selected `%s`' % selected_filename + '. To perform analysis on this file, continue below')
-    df_test = pd.read_csv(selected_filename,nrows=2000)
-
+    st.markdown("#### Days of Relationship vs Cost ")
+    img = Image.open('seaborn.png')
+    st.image(img,width=700)
+    df_test = pd.read_csv('Test_set_streamlit.csv',nrows=2000)
     num_cols = ['annual_usage', 'diameter', 'wall', 'length', 'num_bends',
        'bend_radius', 'num_boss', 'num_bracket', 'other', 'spec_totals',
        'type_totals', 'component_totals', 'revised_quantity','newCol','weight', 'thickness', 'comp_length',
           'id','num_days_supp_relationship']
 
-
-
     df_test_num = df_test[num_cols]
     corr_df =df_test_num.corr()
-    st.markdown("## Correlation Heat Map")
+    st.markdown("#### Correlation Heat Map")
     # Plot the correlation heatmap
     data = [go.Heatmap(z=corr_df.values,
                                   colorscale='Blackbody',
@@ -87,29 +84,10 @@ def predict_price():
     # iplot(fig)
     st.plotly_chart(fig)
 
-    st.markdown('## Relationship between Days of Conversion and Price')
-    df3 = df_test[['num_days_supp_relationship','newCol']]
-
-    def numday_tomonyear(days):
-        if (days < 90):
-            return "within_three_months"
-        elif(90 > days < 365):
-            return "within year"
-        elif(365 < days < 1095):
-            return "within three years"
-        else:
-            return "more than three years"
-    df3['convertion'] = df3.apply(lambda x: numday_tomonyear(x['num_days_supp_relationship']), axis = 1)
-    df3=df3.rename({'newCol':'price'},axis=1)
-    ax= sns.catplot('convertion', 'price', data=df3, aspect = 1.5)
-    st.pyplot(ax)
-
-    # Load a RF Model
-    loaded_model = pickle.load(open('rf_model.sav', 'rb'))
-    df_test1 = df_test.loc[:, df_test.columns != 'newCol']
-    df_test1.head()
-    arr1=np.array(df_test1)
-    df_test['predicted_price']=loaded_model.predict(arr1)
+    file_csv=[]
+    for f in os.listdir("."):
+        if f.endswith('.csv'):
+            file_csv.append(f)
     st.markdown('## Machine Learning using Random Forest Regression')
     st.markdown('''**Random forest** is a Supervised Learning algorithm which uses ensemble learning 
     method for classification and regression.Random forest is a bagging technique and not a boosting technique. 
@@ -118,8 +96,20 @@ def predict_price():
     A random forest is a meta-estimator (i.e. it combines the result of multiple predictions) which aggregates many 
     decision trees, with some helpful modifications:''')
 
-    # st.markdown('Press **Run** to run the ML model on the uploaded data')
+    selected_filename = st.selectbox('Load a test file to execute',file_csv,index=4)
     st.write('You have selected `%s`' % selected_filename + '. Press **Run** to execute the ML model on the uploaded data')
+    df_test = pd.read_csv(selected_filename,nrows=2000)
+    df3 = df_test[['num_days_supp_relationship','newCol']]
+
+    # Load a RF Model
+    loaded_model = pickle.load(open('rf_model.sav', 'rb'))
+    df_test1 = df_test.loc[:, df_test.columns != 'newCol']
+    df_test1.head()
+    arr1=np.array(df_test1)
+    df_test['predicted_price']=loaded_model.predict(arr1)
+
+    # st.markdown('Press **Run** to run the ML model on the uploaded data')
+    # st.write('You have selected `%s`' % selected_filename + '. Press **Run** to execute the ML model on the uploaded data')
     # button1 = st.button('Run')
     # st.markdown(":chart_with_upwards_trend:")
     if st.button('Run'):
@@ -127,7 +117,7 @@ def predict_price():
         st.success(round(r2_score(df_test['predicted_price'], df_test['newCol']),3))
         st.markdown("### Looking at Some of the Actual and the Predicted values")
         st.text("")
-        df_12 = df_test[['newCol','predicted_price']].iloc[:5,:]
+        df_12 = df_test[['revised_quantity','type_totals','annual_usage','diameter','weight','newCol','predicted_price']].iloc[:5,:]
         df_12 = df_12.rename({'newCol':'actual_price'},axis=1)
         st.table(df_12)
 
@@ -176,15 +166,25 @@ def predict_price():
                                                            verbose=True, mode='regression')
         st.markdown("### LIME output for one row of input")
         st.text("")
-        i = 25
+        i = 300
         exp = explainer.explain_instance(arr1[i], loaded_model.predict)
         plt=exp.as_pyplot_figure(label=1)
         plt.set_figwidth(15)
         plt.set_figheight(10)
         plt.align_ylabels()
         st.pyplot(plt)
-        df1 = pd.DataFrame(exp.as_list(),columns=['rules','values'])
-        st.write(df1)
+        # estimator = loaded_model.estimators_[5]
+        # export_graphviz(estimator,
+        #         out_file='tree.dot',
+        #         feature_names = X.columns,
+        #         class_names = df_test.newCol,
+        #         rounded = True, proportion = False,
+        #         precision = 2, filled = True)
+        # with open("tree.dot") as f:
+        #     dot_graph = f.read()
+        # st.pyplot(graphviz.Source(dot_graph))
+        # img = Image.open('tree.png')
+        # st.image(img,width=900)
 
     return 0
 

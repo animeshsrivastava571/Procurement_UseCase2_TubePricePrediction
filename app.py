@@ -975,48 +975,62 @@ def main():
            </div>
         """
         st.markdown(html_temp,unsafe_allow_html=True)
-        cat_level1 =['Category Analytics','Spend Analytics','Savings Lifecycle Analytics']
+        cat_level1 =['Category Analysis','Spend Analytics','Savings Lifecycle Analytics']
         a = st.radio('', cat_level1,index=0,key=None)
-        if a == 'Category Analytics':
-            cat_level2 =['Classification','Consumption Analysis']
+        if a == 'Category Analysis':
+            cat_level2 =['Classification','Inventory Analysis']
 
             b=st.selectbox('Select Sublevel', cat_level2,index=1)
             st.write('You selected `%s`' % b)
 
-            if b == 'Consumption Analysis':
+            if b == 'Inventory Analysis':
                 st.markdown(' # Demand Forecasting :chart_with_upwards_trend:')
                 st.markdown('''
                 For the monthly demand for each product in different central  warehouse
-                - Products are manufactured in different loaction all over the world
+                - Products are manufactured in different location all over the world
                 - Takes more than one month to ship products via ocean to different central ware houses
                 
                 The task is to do a **Demand Forecast** across multiple warehouses
                 ''')
                 demand_forecast(file_csv)
+            elif b== 'Classification':
+                st.markdown("## Problem Statement")
+                st.markdown("""
+                ##### By segmenting the different part/ products being procured by the company,the procurement team can work to optimise""")
 
         if a=='Spend Analytics':
                 cat_level3=['Spend Classification','Spend Forecasting']
                 b=st.selectbox('Select Sublevel', cat_level3,index=0)
                 if b=="Spend Classification":
                     spend_classification.spend_classify()
+                elif b=="Spend Forecasting":
+                    st.markdown("## Problem Statement")
+                    st.markdown(""" 
+                    ##### Estimating the expected expenditure allows procurement team to optimise and control the spend""")
 
 
         if a=='Savings Lifecycle Analytics':
-                cat_level4=['Cost-Savings','Spend vs Budget']
-                st.selectbox('Select Sublevel', cat_level4,index=0)
+                cat_level4=['Cost-Savings']
+                b=st.selectbox('Select Sublevel', cat_level4,index=0)
+                if b=='Cost-Savings':
+                    st.markdown("## Problem Statement:")
+                    st.markdown(""" 
+                     ##### One of the ways which the companies can save cost is procuring the parts at cheaper rate. Sometimes the product price is not in proportion with the characteristics of products. Thus, we help companies in coming with pricing for a product which is in proportion with characteristics of the product
+                    """)
+
 
     if menu_sel == 'Strategic Sourcing':
         # st.markdown('# Category Management')
         html_temp = """
-        <div style="background-color:#8E1047;padding:10px">
+        <div style="background-color:#660509;padding:10px">
         <h1 style="color:white;text-align:center;">Strategic Sourcing </h1>
            </div>
         """
         st.markdown(html_temp,unsafe_allow_html=True)
-        cat_level1 =['Supplier Analytics','Market Intelligence','Pricing Analytics','Procurement Benchmarking']
+        cat_level1 =['Supplier Analytics','Market Intelligence','Pricing Analytics']
         a = st.radio('', cat_level1,index=2,key=None)
         if a == 'Pricing Analytics':
-            cat_level2 =['Price Variance for an SKU','Price Variance by division/geography','Labor Rate Prediction']
+            cat_level2 =['Price Variance for an SKU','Price Variance by division or geography']
 
             b=st.selectbox('Select Sublevel', cat_level2,index=0)
             st.write('You selected `%s`' % b)
@@ -1024,12 +1038,151 @@ def main():
             if b == 'Price Variance for an SKU':
                 st.markdown('# Tube Price Prediction :sparkle:')
                 st.markdown('''
-                ### Business Objective
+                ## Business Objective
                 - A construction equipment  major relies on a complex set of tubes to keep the equipment functioning. 
                 - Tubes can vary across a number of dimensions, including base materials, number of bends, bend radius, bolt patterns, and end types.
                 - Combine the characteristics of each Tube Assembly(TA) with supplier pricing dynamics in order to forecast a quote price (from supplier
                 ''')
                 tube_price.predict_price()
+
+            if b == 'Price Variance by division or geography':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### A company has lots of vendors from various geography. Sometimes the company orders same products from different vendors. We combine various characteristics of products and help the company to get competitive pricing from vendors to reduce cost.
+
+                """)
+
+        elif a == 'Market Intelligence':
+            cat_level2 =['Competitive Intelligence']
+
+            b=st.selectbox('Select Sublevel', cat_level2,index=0)
+            st.write('You selected `%s`' % b)
+            if b == 'Competitive Intelligence':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### Identify multiple vendors for same requirement. Compring them on multiple parameters to get best deal
+
+                """)
+
+        elif a == 'Supplier Analytics':
+            cat_level2 =['Supplier performance metrics','Approved / Preferred Suppliers']
+
+            b=st.selectbox('Select Sublevel', cat_level2,index=0)
+            st.write('You selected `%s`' % b)
+            if b == 'Supplier performance metrics':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### Measure and Track suppliers on KPI's as per requirement.
+
+                """)
+
+            elif b == 'Approved / Preferred Suppliers':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### Segment the suppliers to identify best and worst suppliers so  that company can work with them to increase the consitency in supply
+
+
+                """)
+
+
+    if menu_sel =='Contract Management':
+        # st.markdown('# Category Management')
+        html_temp = """
+        <div style="background-color:#338BFF;padding:10px">
+        <h1 style="color:white;text-align:center;">Contract Management </h1>
+           </div>
+        """
+        st.markdown(html_temp,unsafe_allow_html=True)
+        cat_level1 =['Bid Analytics','Fraud Detection','Contracting Analytics']
+        a = st.radio('', cat_level1,index=2,key=None)
+
+        if a == 'Bid Analytics':
+            cat_level2 =['Compare information in competing bids']
+
+            b=st.selectbox('Select Sublevel', cat_level2,index=0)
+            st.write('You selected `%s`' % b)
+            if b == 'Compare information in competing bids':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### Compare responses from various venodors on a particular RFX.
+
+
+                """)
+        elif a == 'Fraud Detection':
+            cat_level2 =['Delivery Fraud','Billing Fraud']
+
+            b=st.selectbox('Select Sublevel', cat_level2,index=0)
+            st.write('You selected `%s`' % b)
+            if b == 'Delivery Fraud':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### Control incorrect products to be delivered using Computer Vison and Blockchain
+                """)
+            elif b == 'Billing Fraud':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### Invoice audit using NLP or Computer vision
+                """)
+        elif a == 'Contracting Analytics':
+            cat_level2 =['Contract Compliance','Vendor Master Compliance']
+
+            b=st.selectbox('Select Sublevel', cat_level2,index=0)
+            st.write('You selected `%s`' % b)
+            if b == 'Contract Compliance':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### Evaluate invoices to measure adherence of contract.
+                """)
+            elif b == 'Vendor Master Compliance':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### Compare Master Service Agreement and global agreements to check for any gaps over charges.
+                """)
+
+
+    if menu_sel =='Procure-to-Pay':
+
+
+        html_temp = """
+        <div style="background-color:#9133FF;padding:10px">
+        <h1 style="color:white;text-align:center;">Contract Management </h1>
+           </div>
+        """
+        st.markdown(html_temp,unsafe_allow_html=True)
+        cat_level1 =['Payment Analytics','Transactional Analytics','Value Tracking']
+        a = st.radio('', cat_level1,index=2,key=None)
+
+        if a == 'Payment Analytics':
+            cat_level2 =['Optimize the Days Payable Outstanding (DPO)']
+
+            b=st.selectbox('Select Sublevel', cat_level2,index=0)
+            st.write('You selected `%s`' % b)
+            if b == 'Optimize the Days Payable Outstanding (DPO)':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### Forecasting the amount payables to vendors as to maximise cash flow and minimise risk of penalties.
+            """)
+        elif a == 'Transactional Analytics':
+            cat_level2 =['Automate routine requirements: planning, invoices and documentation']
+
+            b=st.selectbox('Select Sublevel', cat_level2,index=0)
+            st.write('You selected `%s`' % b)
+            if b == 'Automate routine requirements: planning, invoices and documentation':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### Forecast demand and automate the PO process so that it helps procurement to negotiate with vendors
+                """)
+
+        elif a == 'Value Tracking':
+            cat_level2 =['Planned vs Realized']
+
+            b=st.selectbox('Select Sublevel', cat_level2,index=0)
+            st.write('You selected `%s`' % b)
+            if b == 'Planned vs Realized':
+                st.markdown("### Problem Statement")
+                st.markdown("""
+                #### Tool to capture and track procurement teams dollar benefits
+                """)
 
 
 
