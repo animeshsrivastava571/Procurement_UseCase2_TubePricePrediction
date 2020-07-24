@@ -14,24 +14,26 @@ from pylab import rcParams
 def forecast():
 
     st.markdown("## About DeepAR")
-    st.markdown(
+    html_tag=(
         """
-        The **Amazon SageMaker DeepAR** forecasting algorithm is a supervised learning algorithm for forecasting 
-        scalar (one-dimensional) time series using recurrent neural networks (RNN). Classical forecasting 
-        methods, such as autoregressive integrated moving average (ARIMA) or exponential smoothing (ETS), 
-        fit a single model to each individual time series. They then use that model to extrapolate the time 
-        series into the future. The basic algorithm uses **Recurrent Neural Networks.**
+        <div style='text-align: justify;'> 
         
-        In many applications, however, you have many similar time series across a set of cross-sectional units. For example, 
+        
+        **The Amazon SageMaker DeepAR** forecasting algorithm is a supervised learning algorithm for forecasting 
+        scalar (one-dimensional) time series using recurrent neural networks (RNN). Classical forecasting methods, such as autoregressive integrated moving average (ARIMA) or exponential smoothing (ETS), 
+        fit a single model to each individual time series. They then use that model to extrapolate the time 
+        series into the future. </div>
+        
+        The basic algorithm uses **Recurrent Neural Networks.** 
+        
+         <div style='text-align: justify;'> In many applications, however, you have many similar time series across a set of cross-sectional units. For example, 
         you might have time series groupings for demand for different products, server loads, and requests for webpages. 
         For this type of application, you can benefit from training a single model jointly over all of the time series. 
         DeepAR takes this approach. When your dataset contains hundreds of related time series, DeepAR outperforms the 
         standard ARIMA and ETS methods. You can also use the trained model to generate forecasts for new time series 
-        that are similar to the ones it has been trained on.
-        
-        
-        """
+        that are similar to the ones it has been trained on. </div>"""
     )
+    st.markdown(html_tag,unsafe_allow_html=True)
     st.markdown('## Monthly Forecast using DeepAR')
     df = pd.read_csv('Warehouse_monthly.csv')
     df['Date'] = pd.to_datetime(df['Date'])
@@ -91,7 +93,7 @@ def forecast():
         plt.ylabel('Order Demand',fontsize=40)
         plt.xticks(fontsize=30)
         plt.yticks(fontsize=30)
-        st.pyplot()
+        st.pyplot(transparent=True,linewidth=20)
 
 
     ts_entry = tss[0]

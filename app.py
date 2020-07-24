@@ -9,6 +9,8 @@ import deepAr
 from fbprophet import Prophet
 import tube_price
 import spend_classification
+from SessionState import get
+from PIL import Image
 
 
 def summary_plots(df_final):
@@ -25,13 +27,15 @@ def summary_plots(df_final):
     layout = go.Layout(
     title='Order Demand Boxplot Across Different Warehouses - Weekly',
     yaxis=dict(
-        autorange=True, showgrid=True, zeroline=True,
+        autorange=True, showgrid=False, zeroline=True,
         gridcolor='rgb(233,233,233)', zerolinecolor='rgb(255, 255, 255)',
         zerolinewidth=2, gridwidth=1),
-    xaxis=dict(tickangle=15),
+    xaxis=dict(tickangle=15,showgrid=False),
     margin=dict(l=40, r=30, b=80, t=100), showlegend=False,
     width=900,
-                height=500
+                height=500,
+        paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)'
     )
 
 
@@ -178,16 +182,18 @@ def summary_plots(df_final):
 
 
     layout = dict(title = 'Warehouse J Forecast SARIMA - Weekly',
-                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False),
-                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False),
+                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False,showgrid=False),
+                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False,showgrid=False),
                   width=900,
-                height=500
+                height=500,
+                  paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)'
 
                  )
     fig = dict(data = data, layout = layout)
     st.plotly_chart(fig)
 
-    st.cache(persist=True)
+    # st.cache(persist=True)
     #Running Prophet on Warehouse J
     df_warehouse_j = df_final[['Date', 'Order_Demand_Whse_J']]
     df_j = df_warehouse_j.rename(columns={"Date": "ds", "Order_Demand_Whse_J": "y"})
@@ -247,10 +253,12 @@ def summary_plots(df_final):
     data = [trace1, lower_band, upper_band, trace]
 
     layout = dict(title='Warehouse J forecast FbProphet - Weekly',
-                 xaxis=dict(title = 'Dates', ticklen=2, zeroline=True),
-                  yaxis=dict(title = 'Order Quantity', ticklen=2, zeroline=True),
+                 xaxis=dict(title = 'Dates', ticklen=2, zeroline=True,showgrid=False),
+                  yaxis=dict(title = 'Order Quantity', ticklen=2, zeroline=True,showgrid=False),
                   width=900,
-                height=500)
+                height=500,
+                  paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)')
 
     fig=dict(data=data,layout=layout)
     # plt.savefig('btc03.html')
@@ -272,10 +280,10 @@ def EDA_Warehouse_Demnds(df_final):
     layout = go.Layout(
     title=' Weekly Order Demand Boxplot Across Different Warehouses',
     yaxis=dict(
-        autorange=True, showgrid=True, zeroline=True,
+        autorange=True, showgrid=False, zeroline=True,
         gridcolor='rgb(233,233,233)', zerolinecolor='rgb(255, 255, 255)',
         zerolinewidth=2, gridwidth=1),
-    xaxis=dict(tickangle=15),
+    xaxis=dict(tickangle=15,showgrid=False),
     margin=dict(l=40, r=30, b=80, t=100), showlegend=False,
     width=900,
                 height=500,
@@ -284,7 +292,9 @@ def EDA_Warehouse_Demnds(df_final):
         font_size=10,
         font_family="Rockwell"
 
-    )
+    ),
+        paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)'
     )
 
 
@@ -331,8 +341,8 @@ def EDA_Warehouse_Demnds(df_final):
 
 
     layout = dict(title = 'Warehouse Demand - Daily',
-                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False),
-                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False),
+                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False,showgrid=False),
+                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False,showgrid=False),
                   width=900,
                   height=500,
                   hoverlabel=dict(
@@ -340,7 +350,9 @@ def EDA_Warehouse_Demnds(df_final):
                                     font_size=10,
                                     font_family="Rockwell"
 
-    )
+                                    ),
+                  paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)'
 
     )
     fig2 = dict(data = data, layout = layout)
@@ -393,8 +405,8 @@ def EDA_Warehouse_Demnds(df_final):
 
 
     layout = dict(title = 'Warehouse Demand - Weekly',
-                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False),
-                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False),
+                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False,showgrid=False),
+                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False,showgrid=False),
                   width=900,
                   height=500,
                   hoverlabel=dict(
@@ -402,7 +414,9 @@ def EDA_Warehouse_Demnds(df_final):
                                     font_size=10,
                                     font_family="Rockwell"
 
-    )
+    ),
+                  paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)'
 
                  )
     fig3 = dict(data = data, layout = layout)
@@ -452,8 +466,8 @@ def EDA_Warehouse_Demnds(df_final):
 
 
     layout = dict(title = 'Warehouse Demand - Monthly',
-                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False),
-                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False),
+                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False,showgrid=False),
+                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False,showgrid=False),
                   width=900,
                   height=500,
                   hoverlabel=dict(
@@ -461,7 +475,9 @@ def EDA_Warehouse_Demnds(df_final):
                                     font_size=10,
                                     font_family="Rockwell"
 
-    )
+    ),
+                  paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)'
 
                  )
     fig4 = dict(data = data, layout = layout)
@@ -525,8 +541,8 @@ def seasonality(df_final):
 
 
         layout = dict(title = 'Plot for Warehouse {} - Seasonality'.format(whouse),
-                      xaxis= dict(title= 'Date',ticklen= 5,zeroline= False),
-                      yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False),
+                      xaxis= dict(title= 'Date',ticklen= 5,zeroline= False,showgrid=False),
+                      yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False,showgrid=False),
                       width=900,
                       height=500,
                       hoverlabel=dict(
@@ -534,7 +550,9 @@ def seasonality(df_final):
                                     font_size=10,
                                     font_family="Rockwell"
 
-    )
+    ),
+                      paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)'
 
                      )
         fig = dict(data = data, layout = layout)
@@ -558,18 +576,21 @@ def seasonality(df_final):
 
 def ARIMA_model(df_final):
     st.markdown("## About SARIMA")
-    st.markdown(
-        """
-        In statistics and econometrics, and in particular in time series analysis, an autoregressive 
+    htm_tag=(
+        '''
+        <div style='text-align: justify;'> In statistics and econometrics, and in particular in time series analysis, an autoregressive 
         integrated moving average (ARIMA) model is a generalization of an autoregressive moving average (ARMA) 
         model. Both of these models are fitted to time series data either to better understand the data or to 
         predict future points in the series (forecasting). ARIMA models are applied in some cases where 
         data show evidence of non-stationarity, where an initial differencing step 
         (corresponding to the "integrated" part of the model) can be applied one or more times to 
-        eliminate the non-stationarity. **SARIMA** is an extension of the ARIMA model which includes the seasonality
-        component.
-        """
+        eliminate the non-stationarity. 
+        
+        **SARIMA** is an extension of the ARIMA model which includes the seasonality
+        component. </div>
+        '''
     )
+    st.markdown(htm_tag,unsafe_allow_html=True)
 
     st.markdown('## SARIMA on Warehouse J - Weekly Demand')
     df_month = df_final.resample('M', on = 'Date').sum()
@@ -610,7 +631,7 @@ def ARIMA_model(df_final):
     st.table(df_results)
 
     results.plot_diagnostics(figsize=(20, 12))
-    st.pyplot()
+    st.pyplot(transparent=True)
 
 
     start = len(train)
@@ -644,8 +665,8 @@ def ARIMA_model(df_final):
 
 
     layout = dict(title = 'Warehouse J - Actual vs Predicted - Weekly Demand',
-                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False),
-                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False),
+                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False,showgrid=False),
+                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False,showgrid=False),
                   width=900,
                 height=500,
                 hoverlabel=dict(
@@ -653,7 +674,9 @@ def ARIMA_model(df_final):
                                     font_size=10,
                                     font_family="Rockwell"
 
-    )
+    ),
+                  paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)'
 
                  )
     fig = dict(data = data, layout = layout)
@@ -753,8 +776,8 @@ def ARIMA_model(df_final):
 
 
     layout = dict(title = 'Warehouse J Forecast - Weekly',
-                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False),
-                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False),
+                  xaxis= dict(title= 'Date',ticklen= 5,zeroline= False,showgrid=False),
+                  yaxis = dict(title= 'Warehouse Orders',ticklen=5,zeroline=False,showgrid=False),
                   width=900,
                 height=500,
                 hoverlabel=dict(
@@ -762,7 +785,9 @@ def ARIMA_model(df_final):
                                     font_size=10,
                                     font_family="Rockwell"
 
-    )
+    ),
+                  paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)'
 
                  )
     fig = dict(data = data, layout = layout)
@@ -831,8 +856,8 @@ def prophet(df_final):
     data = [trace1, lower_band, upper_band, trace]
 
     layout = dict(title='Order Demand Forecasting - Warehouse S',
-                 xaxis=dict(title = 'Dates', ticklen=2, zeroline=True),
-                  yaxis=dict(title = 'Order Quantity', ticklen=2, zeroline=True),
+                 xaxis=dict(title = 'Dates', ticklen=2, zeroline=True,showgrid=False),
+                  yaxis=dict(title = 'Order Quantity', ticklen=2, zeroline=True,showgrid=False),
                    width=900,
                 height=500,
                   hoverlabel=dict(
@@ -840,7 +865,10 @@ def prophet(df_final):
                                     font_size=10,
                                     font_family="Rockwell"
 
-    ))
+    ),
+                  paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)'
+                  )
 
     fig=dict(data=data,layout=layout)
     st.plotly_chart(fig)
@@ -895,8 +923,8 @@ def prophet(df_final):
     data = [trace1, lower_band, upper_band, trace]
 
     layout = dict(title='Order Demand Forecasting - Warehouse J',
-                 xaxis=dict(title = 'Dates', ticklen=2, zeroline=True),
-                  yaxis=dict(title = 'Order Quantity', ticklen=2, zeroline=True),
+                 xaxis=dict(title = 'Dates', ticklen=2, zeroline=True,showgrid=False),
+                  yaxis=dict(title = 'Order Quantity', ticklen=2, zeroline=True,showgrid=False),
                   width=900,
                 height=500,
                   hoverlabel=dict(
@@ -904,7 +932,10 @@ def prophet(df_final):
                                     font_size=10,
                                     font_family="Rockwell"
 
-    ))
+    ),
+                  paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)'
+                  )
 
     fig=dict(data=data,layout=layout)
     # plt.savefig('btc03.html')
@@ -948,7 +979,7 @@ def demand_forecast(file_csv):
 
 
 def main():
-
+    # st.markdown('<style>body{background-color:#FCFCEF;}</style>',unsafe_allow_html=True)
 
     file_csv=[]
     for f in os.listdir("."):
@@ -956,7 +987,7 @@ def main():
             file_csv.append(f)
     menu_list = ['Home','Category Management','Contract Management','Procure-to-Pay','Strategic Sourcing']
     # Display options in Sidebar
-    st.sidebar.title('Navigation')
+    st.sidebar.title(" Procurement.AI :arrow_forward:")
     menu_sel = st.sidebar.radio('', menu_list, index=0, key=None)
 
 
@@ -968,7 +999,7 @@ def main():
         about.display_about()
 
     if menu_sel == 'Category Management':
-        # st.markdown('# Category Management')
+        st.markdown('<style>body{background-color:#FCFCEF;}</style>',unsafe_allow_html=True)
         html_temp = """
         <div style="background-color:#8E1047;padding:10px">
         <h1 style="color:white;text-align:center;">Category Management </h1>
@@ -1020,7 +1051,7 @@ def main():
 
 
     if menu_sel == 'Strategic Sourcing':
-        # st.markdown('# Category Management')
+        st.markdown('<style>body{background-color:#F7FFF2;}</style>',unsafe_allow_html=True)
         html_temp = """
         <div style="background-color:#660509;padding:10px">
         <h1 style="color:white;text-align:center;">Strategic Sourcing </h1>
@@ -1086,7 +1117,7 @@ def main():
 
 
     if menu_sel =='Contract Management':
-        # st.markdown('# Category Management')
+        st.markdown('<style>body{background-color:#DFFCFE ;}</style>',unsafe_allow_html=True)
         html_temp = """
         <div style="background-color:#338BFF;padding:10px">
         <h1 style="color:white;text-align:center;">Contract Management </h1>
@@ -1145,7 +1176,7 @@ def main():
 
         html_temp = """
         <div style="background-color:#9133FF;padding:10px">
-        <h1 style="color:white;text-align:center;">Contract Management </h1>
+        <h1 style="color:white;text-align:center;">Procure-to-Pay </h1>
            </div>
         """
         st.markdown(html_temp,unsafe_allow_html=True)
@@ -1184,11 +1215,47 @@ def main():
                 #### Tool to capture and track procurement teams dollar benefits
                 """)
 
+    # if menu_sel=='Exit':
+    #     os.kill()
+
 
 
     return 0
 
 
+def auth_session():
+    session_state = get(password='')
+
+
+    if session_state.password != 'ani123':
+
+        def pattern():
+            # st.markdown('<style>body{background-color: White; color: White}</style>',unsafe_allow_html=True)
+            # st.title("Procurement.AI :arrow_forward:")
+
+            st.markdown("<h1 style='text-align: center;font-size:60px;color:#B51E60;'>Procurement.AI</h1>", unsafe_allow_html=True)
+            st.markdown('<style>h1{color: #18813E ;}</style>', unsafe_allow_html=True)
+
+        pattern()
+        pwd_placeholder = st.empty()
+        pwd = pwd_placeholder.text_input("Please Enter Password to Enter:", value="", type="password")
+        # # st.text('Powered by HCL')
+        # img = Image.open('HCL2.jpg')
+        # st.image(img,width=700)
+
+        session_state.password = pwd
+        if session_state.password == 'ani123':
+            # st.balloons()
+            pwd_placeholder.empty()
+            main()
+        elif session_state.password != '':
+            st.error("the password you entered is incorrect")
+    else:
+        main()
 
 if __name__== "__main__":
-    main()
+
+    auth_session()
+
+
+
