@@ -12,10 +12,8 @@ import lime.lime_tabular
 import seaborn as sns
 from sklearn.metrics import r2_score
 from PIL import Image
-from sklearn.tree import export_graphviz
 import os
-os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/release/bin'
-import graphviz
+import base64
 
 def predict_price():
 
@@ -144,7 +142,9 @@ def predict_price():
             y = df_test['newCol'],
             mode = 'markers',
             name = 'Predicted vs Actual Price',
-            text= df_test['predicted_price']
+            text= df_test['predicted_price'],
+                marker=dict(color='green')
+
              )
 
             data = [trace0]
@@ -172,7 +172,8 @@ def predict_price():
             students = list(df_ranks.values1)
             data = [go.Bar(
                x = langs,
-               y = students
+               y = students,
+                marker=dict(color='green')
             )]
             layout = dict(title = 'Feature Importances',title_x=0.5,
                               xaxis= dict(ticklen= 5,zeroline= False,showgrid=False),
@@ -195,18 +196,19 @@ def predict_price():
             plt.set_figheight(10)
             plt.align_ylabels()
             st.pyplot(plt,transparent=True)
-            # estimator = loaded_model.estimators_[5]
-            # export_graphviz(estimator,
-            #         out_file='tree.dot',
-            #         feature_names = X.columns,
-            #         class_names = df_test.newCol,
-            #         rounded = True, proportion = False,
-            #         precision = 2, filled = True)
-            # with open("tree.dot") as f:
-            #     dot_graph = f.read()
-            # st.pyplot(graphviz.Source(dot_graph))
-            # img = Image.open('tree.png')
-            # st.image(img,width=900)
+
+            def get_table_download_link(df):
+                    """Generates a link allowing the data in a given panda dataframe to be downloaded
+                    in:  dataframe
+                    out: href string
+                    """
+                    csv = df.to_csv(index=False)
+                    b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+                    href = f'<a href="data:file/csv;base64,{b64}" download="predicted.csv">Download Results csv file</a>'
+                    return href
+            # st.markdown('### Download Results')
+            st.markdown(get_table_download_link(df_test), unsafe_allow_html=True)
+
 
     return 0
 

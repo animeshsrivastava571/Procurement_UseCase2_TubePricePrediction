@@ -1053,7 +1053,7 @@ def main():
     if menu_sel == 'Strategic Sourcing':
         st.markdown('<style>body{background-color:#F7FFF2;}</style>',unsafe_allow_html=True)
         html_temp = """
-        <div style="background-color:#660509;padding:10px">
+        <div style="background-color:#2D8401;padding:10px">
         <h1 style="color:white;text-align:center;">Strategic Sourcing </h1>
            </div>
         """
