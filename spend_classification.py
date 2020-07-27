@@ -20,7 +20,7 @@ def spend_classify():
                 organization and presents a major challenge to organizations with limited time and resources. 
                 However, artificial intelligence, specifically machine learning, can increase speed to spend 
                 analysis results and overall accuracy while reducing the amount of manual input.''')
-    img = Image.open('tb_img3.png')
+    img = Image.open('tb_img3_transparent.png')
     st.image(img,width=900)
 
     st.markdown("## Sample Data")

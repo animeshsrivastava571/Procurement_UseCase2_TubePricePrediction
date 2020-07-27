@@ -134,7 +134,7 @@ def predict_price():
             # df_12.set_index('id',inplace=True)
             # df_12.index.name = 'id'
             df_12= df_12.iloc[1:,:]
-            df_12 = df_12.rename({'newCol':'actual_price'},axis=1)
+            df_12 = df_12.rename({'newCol':'actual_price','id':'tube_assembly_id'},axis=1)
             st.table(df_12)
 
             trace0 = go.Scatter(

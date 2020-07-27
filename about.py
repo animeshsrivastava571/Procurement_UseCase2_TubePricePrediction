@@ -19,7 +19,7 @@ def display_about():
     file_.close()
 
     st.markdown(
-        f'<img src="data:image/gif;base64,{data_url}" alt="cat gif" width=700>',
+        f'<img src="data:image/gif;base64,{data_url}" alt="cat gif" width=800>',
         unsafe_allow_html=True,
     )
     st.markdown('# About')
@@ -44,7 +44,7 @@ def display_about():
     st.text("")
     st.markdown('# Limitations')
     st.markdown('''
-                    - Supports only CSV as input
+                    
                     -  Currently work in progress for the entire suite of use cases
                     '''
 
@@ -86,10 +86,11 @@ def display_sidebar():
     st.sidebar.markdown('---')
     
     st.sidebar.title('Disclaimer')
-    st.sidebar.info('This is a WIP product by the COE Data Science and subsequent features will be added')
+    st.sidebar.info('This is a WIP product by the HCL COE Data Science :copyright: and subsequent features will be added')
     st.sidebar.title('About')
     st.sidebar.info('''This app has been developed by [Animesh Srivastava](https://www.linkedin.com/in/animesh-srivastava-87968880/)
                     using [Python](https://www.python.org/),
     [Streamlit](https://streamlit.io/), and [Plotly](https://plotly.com/python/)
                     ''')
+    st.sidebar.info("Current version V1.0, Release Date: 27/07/2020")
 
