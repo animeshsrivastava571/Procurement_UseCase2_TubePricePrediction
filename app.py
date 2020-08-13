@@ -8,7 +8,7 @@ import os
 import deepAr
 from fbprophet import Prophet
 import tube_price
-import spend_classification
+import commodity_classification
 from SessionState import get
 from PIL import Image
 
@@ -1033,6 +1033,7 @@ def main():
                 cat_level3=['Spend Classification','Spend Forecasting']
                 b=st.selectbox('Select Sublevel', cat_level3,index=0)
                 if b=="Spend Classification":
+
                     spend_classification.spend_classify()
                 elif b=="Spend Forecasting":
                     st.markdown("## Problem Statement")
