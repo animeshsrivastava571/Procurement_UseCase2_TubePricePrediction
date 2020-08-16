@@ -1009,7 +1009,7 @@ def main():
         cat_level1 =['Category Analysis','Spend Analytics','Savings Lifecycle Analytics']
         a = st.radio('', cat_level1,index=0,key=None)
         if a == 'Category Analysis':
-            cat_level2 =['Classification','Inventory Analysis']
+            cat_level2 =['Commodity Classification','Inventory Analysis']
 
             b=st.selectbox('Select Sublevel', cat_level2,index=1)
             st.write('You selected `%s`' % b)
@@ -1024,17 +1024,13 @@ def main():
                 The task is to do a **Demand Forecast** across multiple warehouses
                 ''')
                 demand_forecast(file_csv)
-            elif b== 'Classification':
-                st.markdown("## Problem Statement")
-                st.markdown("""
-                ##### By segmenting the different part/ products being procured by the company,the procurement team can work to optimise""")
-
+            elif b=='Commodity Classification':
+                commodity_classification.commodity_classify()
         if a=='Spend Analytics':
                 cat_level3=['Spend Classification','Spend Forecasting']
                 b=st.selectbox('Select Sublevel', cat_level3,index=0)
                 if b=="Spend Classification":
-
-                    spend_classification.spend_classify()
+                    st.write("WIP")
                 elif b=="Spend Forecasting":
                     st.markdown("## Problem Statement")
                     st.markdown(""" 
